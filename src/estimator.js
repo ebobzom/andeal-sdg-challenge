@@ -13,6 +13,7 @@ function normalizePeriod(periodType, timeToElapse) {
 
 function hospitalBedsAvailable(totalHospitalBeds, severeCasesByRequestedTime) {
   const availabeBeds = 0.35 * Number(totalHospitalBeds);
+
   if (availabeBeds > 0) return availabeBeds;
   if (availabeBeds <= 0) return -severeCasesByRequestedTime;
   return null;
