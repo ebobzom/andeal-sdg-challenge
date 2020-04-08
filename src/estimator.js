@@ -2,12 +2,19 @@
 function normalizePeriod(periodType, timeToElapse) {
   if (periodType.toLowerCase() === 'days') return timeToElapse;
 
-  if (periodType.toLowerCase() === 'weeks') return parseInt(timeToElapse * 7, 10);
+  if (periodType.toLowerCase() === 'weeks') return timeToElapse * 7;
 
-  if (periodType.toLowerCase() === 'months') return parseInt(timeToElapse * 30, 10);
+  if (periodType.toLowerCase() === 'months') return timeToElapse * 30;
 
-  if (periodType.toLowerCase() === 'years') return parseInt(timeToElapse * 30 * 365, 10);
+  if (periodType.toLowerCase() === 'years') return timeToElapse * 30 * 365;
 
+  return null;
+}
+
+function hospitalBedsAvailable(totalHospitalBeds, severeCasesByRequestedTime) {
+  const availabeBeds = 0.35 * Number(totalHospitalBeds);
+  if (availabeBeds > 0) return availabeBeds;
+  if (availabeBeds <= 0) return -severeCasesByRequestedTime;
   return null;
 }
 
@@ -21,6 +28,16 @@ const covid19ImpactEstimator = (data) => {
   severeImpact.currentlyInfected = data.reportedCases * 50;
   impact.infectionsByRequestedTime = impact.currentlyInfected * (2 ** power);
   severeImpact.infectionsByRequestedTime = severeImpact.currentlyInfected * (2 ** power);
+  impact.severeCasesByRequestedTime = parseInt(impact.infectionsByRequestedTime * 0.15, 10);
+  severeImpact.severeCasesByRequestedTime = parseInt(
+    severeImpact.infectionsByRequestedTime * 0.15, 10
+  );
+  impact.hospitalBedsByRequestedTime = hospitalBedsAvailable(
+    data.totalHospitalBeds, impact.severeCasesByRequestedTime
+  );
+  severeImpact.hospitalBedsByRequestedTime = hospitalBedsAvailable(
+    data.totalHospitalBeds, severeImpact.severeCasesByRequestedTime
+  );
 
   return {
     data,
