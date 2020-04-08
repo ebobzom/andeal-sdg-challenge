@@ -11,19 +11,9 @@ function normalizePeriod(periodType, timeToElapse) {
   return null;
 }
 
-function hospitalBedsAvailable(totalHospitalBeds, severeCasesByRequestedTime, percent) {
-  if (percent === 0.35) {
-    const availabeBeds = percent * totalHospitalBeds;
-    if (availabeBeds > 0) return availabeBeds;
-    if (availabeBeds <= 0) return -severeCasesByRequestedTime;
-  }
-
-  if (percent === 0.1) {
-    const availabeBeds = percent * totalHospitalBeds;
-    if (availabeBeds > 0) return availabeBeds;
-    if (availabeBeds <= 0) return -severeCasesByRequestedTime;
-  }
-  return null;
+function hospitalBedsAvailable(totalHospitalBeds, severeCasesByRequestedTime) {
+  const availableBed = 0.35 * totalHospitalBeds;
+  return availableBed - severeCasesByRequestedTime;
 }
 
 const covid19ImpactEstimator = (data) => {
@@ -39,10 +29,10 @@ const covid19ImpactEstimator = (data) => {
   impact.severeCasesByRequestedTime = impact.infectionsByRequestedTime * 0.15;
   severeImpact.severeCasesByRequestedTime = severeImpact.infectionsByRequestedTime * 0.15;
   impact.hospitalBedsByRequestedTime = hospitalBedsAvailable(
-    data.totalHospitalBeds, impact.severeCasesByRequestedTime, 0.35
+    data.totalHospitalBeds, impact.severeCasesByRequestedTime
   );
   severeImpact.hospitalBedsByRequestedTime = hospitalBedsAvailable(
-    data.totalHospitalBeds, severeImpact.severeCasesByRequestedTime, 0.1
+    data.totalHospitalBeds, severeImpact.severeCasesByRequestedTime
   );
 
   return {
