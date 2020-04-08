@@ -11,11 +11,18 @@ function normalizePeriod(periodType, timeToElapse) {
   return null;
 }
 
-function hospitalBedsAvailable(totalHospitalBeds, severeCasesByRequestedTime) {
-  const availabeBeds = 0.35 * Number(totalHospitalBeds);
+function hospitalBedsAvailable(totalHospitalBeds, severeCasesByRequestedTime, percent) {
+  if (percent === 0.35) {
+    const availabeBeds = percent * totalHospitalBeds;
+    if (availabeBeds > 0) return availabeBeds;
+    if (availabeBeds <= 0) return -severeCasesByRequestedTime;
+  }
 
-  if (availabeBeds > 0) return availabeBeds;
-  if (availabeBeds <= 0) return -severeCasesByRequestedTime;
+  if (percent === 0.1) {
+    const availabeBeds = percent * totalHospitalBeds;
+    if (availabeBeds > 0) return availabeBeds;
+    if (availabeBeds <= 0) return -severeCasesByRequestedTime;
+  }
   return null;
 }
 
