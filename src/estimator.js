@@ -32,17 +32,21 @@ const covid19ImpactEstimator = (data) => {
   severeImpact.hospitalBedsByRequestedTime = hospitalBedsAvailable(
     data.totalHospitalBeds, severeImpact.severeCasesByRequestedTime
   );
-  impact.casesForICUByRequestedTime = impact.infectionsByRequestedTime * 0.05;
-  severeImpact.casesForICUByRequestedTime = severeImpact.infectionsByRequestedTime * 0.05;
-  impact.casesForVentilatorsByRequestedTime = impact.infectionsByRequestedTime * 0.02;
-  severeImpact.casesForVentilatorsByRequestedTime = severeImpact.infectionsByRequestedTime * 0.02;
-  impact.dollarsInFlight = impact.infectionsByRequestedTime * normalizePeriod(
+  impact.casesForICUByRequestedTime = parseInt(impact.infectionsByRequestedTime * 0.05, 10);
+  severeImpact.casesForICUByRequestedTime = parseInt(
+    severeImpact.infectionsByRequestedTime * 0.05, 10
+  );
+  impact.casesForVentilatorsByRequestedTime = parseInt(impact.infectionsByRequestedTime * 0.02, 10);
+  severeImpact.casesForVentilatorsByRequestedTime = parseInt(
+    severeImpact.infectionsByRequestedTime * 0.02, 10
+  );
+  impact.dollarsInFlight = parseInt((impact.infectionsByRequestedTime * normalizePeriod(
     data.periodType, data.timeToElapse
-  ) * data.region.avgDailyIncomeInUSD * data.region.avgDailyIncomePopulation;
+  ) * data.region.avgDailyIncomeInUSD * data.region.avgDailyIncomePopulation), 10);
 
-  severeImpact.dollarsInFlight = severeImpact.infectionsByRequestedTime * normalizePeriod(
+  severeImpact.dollarsInFlight = parseInt((severeImpact.infectionsByRequestedTime * normalizePeriod(
     data.periodType, data.timeToElapse
-  ) * data.region.avgDailyIncomeInUSD * data.region.avgDailyIncomePopulation;
+  ) * data.region.avgDailyIncomeInUSD * data.region.avgDailyIncomePopulation), 10);
 
   return {
     data,
