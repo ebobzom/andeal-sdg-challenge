@@ -10,8 +10,8 @@ function normalizePeriod(periodType, timeToElapse) {
 }
 
 function hospitalBedsAvailable(totalHospitalBeds, severeCasesByRequestedTime) {
-  const availableBed = Math.floor(0.35 * totalHospitalBeds);
-  return availableBed - severeCasesByRequestedTime;
+  const availableBed = 0.35 * totalHospitalBeds;
+  return Math.floor(availableBed - severeCasesByRequestedTime);
 }
 
 const covid19ImpactEstimator = (data) => {
