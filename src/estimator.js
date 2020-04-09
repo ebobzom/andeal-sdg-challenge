@@ -17,6 +17,8 @@ function hospitalBedsAvailable(totalHospitalBeds, severeCasesByRequestedTime) {
 }
 
 const covid19ImpactEstimator = (data) => {
+  /* eslint no-console:off */
+  console.log(data);
   const impact = {};
   const severeImpact = {};
   const normalizedTime = normalizePeriod(data.periodType, data.timeToElapse);
