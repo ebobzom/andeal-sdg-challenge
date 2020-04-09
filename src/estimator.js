@@ -6,8 +6,6 @@ function normalizePeriod(periodType, timeToElapse) {
 
   if (periodType.toLowerCase() === 'months') return timeToElapse * 30;
 
-  if (periodType.toLowerCase() === 'years') return timeToElapse * 30 * 365;
-
   return null;
 }
 
