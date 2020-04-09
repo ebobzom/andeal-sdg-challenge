@@ -10,7 +10,7 @@ function normalizePeriod(periodType, timeToElapse) {
 }
 
 function hospitalBedsAvailable(totalHospitalBeds, severeCasesByRequestedTime) {
-  const availableBed = parseInt(0.35 * totalHospitalBeds, 10);
+  const availableBed = Math.floor(0.35 * totalHospitalBeds);
   return availableBed - severeCasesByRequestedTime;
 }
 
