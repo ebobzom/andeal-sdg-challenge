@@ -85,13 +85,14 @@ const covid19ImpactEstimator = (data) => {
   severeImpact.casesForVentilatorsByRequestedTime = parseInt(
     severeImpact.infectionsByRequestedTime * 0.02, 10
   );
-  impact.dollarsInFlight = impact.infectionsByRequestedTime * normalizePeriod(
+  impact.dollarsInFlight = parseInt((impact.infectionsByRequestedTime
+    * data.region.avgDailyIncomeInUSD * data.region.avgDailyIncomePopulation) / normalizePeriod(
     data.periodType, data.timeToElapse
-  ) * data.region.avgDailyIncomeInUSD * data.region.avgDailyIncomePopulation;
-
-  severeImpact.dollarsInFlight = severeImpact.infectionsByRequestedTime * normalizePeriod(
+  ), 10);
+  severeImpact.dollarsInFlight = parseInt((severeImpact.infectionsByRequestedTime
+  * data.region.avgDailyIncomeInUSD * data.region.avgDailyIncomePopulation) / normalizePeriod(
     data.periodType, data.timeToElapse
-  ) * data.region.avgDailyIncomeInUSD * data.region.avgDailyIncomePopulation;
+  ), 10);
 
   return {
     data,
