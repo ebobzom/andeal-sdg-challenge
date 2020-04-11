@@ -1,5 +1,5 @@
 /* eslint linebreak-style: off */
-
+// convert to days
 function normalizePeriod(periodType, timeToElapse) {
   if (periodType.toLowerCase() === 'days') return timeToElapse;
 
